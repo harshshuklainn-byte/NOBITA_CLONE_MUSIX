@@ -68,9 +68,9 @@ def stream_markup_timer(_, chat_id, played, dur):
             InlineKeyboardButton(text="▢", callback_data=f"ADMIN Stop|{chat_id}"),
         ],
          [
-             InlineKeyboardButton(text="σᴡηєʀ", url="https://t.me/FLEXSAMAY"),
+             InlineKeyboardButton(text="σᴡηєʀ", url="https://t.me/TNL_NETWORK"),
              
-             InlineKeyboardButton(text="ѕᴜᴘᴘσʀᴛ", url="https://t.me/+S0Q1-J_EQLA3YmU1")
+             InlineKeyboardButton(text="ѕᴜᴘᴘσʀᴛ", url="https://t.me/+adNifJvmcZZlNjA9")
          ],
         [
             InlineKeyboardButton(text=_["CLOSE_BUTTON"], callback_data="close"),
@@ -89,9 +89,9 @@ def stream_markup(_, chat_id):
             InlineKeyboardButton(text="▢", callback_data=f"ADMIN Stop|{chat_id}"),
          ],
         [
-             InlineKeyboardButton(text="σᴡηєʀ", url="https://t.me/FLEXSAMAY"),
+             InlineKeyboardButton(text="σᴡηєʀ", url="https://t.me/TNL_NETWORK"),
              
-             InlineKeyboardButton(text="ѕᴜᴘᴘσʀᴛ", url="https://t.me/+S0Q1-J_EQLA3YmU1")
+             InlineKeyboardButton(text="ѕᴜᴘᴘσʀᴛ", url="https://t.me/+adNifJvmcZZlNjA9")
          ],
         [
             InlineKeyboardButton(text=_["CLOSE_BUTTON"], callback_data="close"),
@@ -242,10 +242,10 @@ def stream_markup2(_, chat_id):
         ],
 [
             InlineKeyboardButton(
-                text="ᴏᴡɴᴇʀ", url=f"tg://user?id=6154383311"
+                text="ᴏᴡɴᴇʀ", url=f"https://t.me/TNL_NETWORK"
             ),
             InlineKeyboardButton(
-                text="sᴜᴘᴘᴏʀᴛ", url=f"https://t.me/+S0Q1-J_EQLA3YmU1"
+                text="sᴜᴘᴘᴏʀᴛ", url=f"https://t.me/+adNifJvmcZZlNjA9"
             ),
         ],
 

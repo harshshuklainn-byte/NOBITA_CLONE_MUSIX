@@ -33,7 +33,7 @@ def private_panel(_):
             InlineKeyboardButton(text=_["S_B_2"], url=config.SUPPORT_CHAT)
         ],
         [
-            InlineKeyboardButton(text=_["S_B_5"], url="https://t.me/FLEXSAMAY"),
+            InlineKeyboardButton(text=_["S_B_5"], url="https://t.me/TNL_NETWORK"),
             InlineKeyboardButton(text=_["S_B_12"], callback_data="gib_source")
         ],
         [InlineKeyboardButton(text=_["S_B_4"], callback_data="settings_back_helper")],
@@ -50,7 +50,7 @@ def private_panell(_):
             )
         ],
         [
-            InlineKeyboardButton(text=_["S_B_5"], url="https://t.me/FLEXSAMAY"),
+            InlineKeyboardButton(text=_["S_B_5"], url="https://t.me/TNL_NETWORK"),
             InlineKeyboardButton(text=_["S_B_2"], url=config.SUPPORT_CHAT),
         ],
         [InlineKeyboardButton(text=_["S_B_4"], callback_data="settings_back_helper")],
