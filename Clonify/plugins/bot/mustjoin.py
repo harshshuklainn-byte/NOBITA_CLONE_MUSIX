@@ -6,7 +6,7 @@ from Clonify import app
 
 #--------------------------
 
-MUST_JOIN = "NOBITA_SUPP0RT"
+MUST_JOIN = "TNL_NETWORK"
 
 #--------------------------
 
