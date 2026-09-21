@@ -15,7 +15,8 @@ API_HASH = getenv("API_HASH")
 BOT_TOKEN = getenv("BOT_TOKEN")
 BOT_ID = getenv("BOT_ID")
 # -------------------------------------------------------
-OWNER_USERNAME = getenv("OWNER_USERNAME","@TNL_NETWORK")
+OWNER_USERNAME = getenv("OWNER_USERNAME", "@TNL_NETWORK")
+OWNER_URL = getenv("OWNER_URL", "https://t.me/TNL_NETWORK")
 # --------------------------------------------------------
 BOT_USERNAME = getenv("BOT_USERNAME" , "SpotifyMusicLiveBot")
 # --------------------------------------------------------
@@ -80,6 +81,8 @@ GIT_TOKEN = getenv(
 SUPPORT_CHANNEL = getenv("SUPPORT_CHANNEL", "https://t.me/TNL_NETWORK")
 SUPPORT_CHAT = getenv("SUPPORT_CHAT", "https://t.me/+adNifJvmcZZlNjA9")
 CHAT = getenv("CHAT", "https://t.me/+adNifJvmcZZlNjA9")
+POWERED_BY_NAME = getenv("POWERED_BY_NAME", "ѕαмαу")
+POWERED_BY_URL = getenv("POWERED_BY_URL", "https://t.me/FLEXSAMAY")
 # ------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------
 

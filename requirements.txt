@@ -38,7 +38,6 @@ pyfiglet
 pykeyboard
 pyrofork
 
-pyrogram==2.0.106
 
 #git+https://github.com/KurimuzonAkuma/pyrogram.git
 python-dotenv
