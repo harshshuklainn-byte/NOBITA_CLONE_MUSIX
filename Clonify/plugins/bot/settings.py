@@ -76,8 +76,6 @@ async def settings_back_markup(client, CallbackQuery: CallbackQuery, _):
     except:
         pass
     if CallbackQuery.message.chat.type == ChatType.PRIVATE:
-        await app.resolve_peer(OWNER_ID)
-        OWNER = OWNER_ID
         buttons = private_panel(_)
         return await CallbackQuery.edit_message_text(
             _["start_2"].format(CallbackQuery.from_user.mention, app.mention),
@@ -100,7 +98,7 @@ async def gib_repo(client, CallbackQuery, _):
         ),
         reply_markup=InlineKeyboardMarkup(
             [
-                [InlineKeyboardButton(text="ᯓ𓆰꯭𝅃꯭🔥𝚴 𝐎 𝐁 𝚰 𝐓 𝚲꯭⟶᯦꯭💸꯭〞", user_id=1106006604)],
+                [InlineKeyboardButton(text="✦ ѕαмαу ✦", url="https://t.me/FLEXSAMAY")],
                 [InlineKeyboardButton(text="⌯ ᴄʟσsє ⌯", callback_data="close")]
             ]
         )
