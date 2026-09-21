@@ -15,13 +15,13 @@ API_HASH = getenv("API_HASH")
 BOT_TOKEN = getenv("BOT_TOKEN")
 BOT_ID = getenv("BOT_ID")
 # -------------------------------------------------------
-OWNER_USERNAME = getenv("OWNER_USERNAME","@II_NOBITA_DEFAULTERS_II")
+OWNER_USERNAME = getenv("OWNER_USERNAME","@TNL_NETWORK")
 # --------------------------------------------------------
-BOT_USERNAME = getenv("BOT_USERNAME" , "NOBITA_MUSIC_TG_BOT")
+BOT_USERNAME = getenv("BOT_USERNAME" , "SpotifyMusicLiveBot")
 # --------------------------------------------------------
-BOT_NAME = getenv("BOT_NAME" , "˹ 𝐍ᴏʙɪᴛᴀ ꭙ 𝐌ᴜsɪᴄ [2] ˼")
+BOT_NAME = getenv("BOT_NAME" , "『𝐒𝐏𝐎𝐓𝐈𝐅𝐘』")
 # ---------------------------------------------------------
-ASSUSERNAME = getenv("ASSUSERNAME" , "NOBITA_MUSIC_TG_BOT")
+ASSUSERNAME = getenv("ASSUSERNAME" , "SpotifyMusicLiveBot")
 # ---------------------------------------------------------
 
 
@@ -41,7 +41,7 @@ LOGGER_ID = int(getenv("LOGGER_ID"))
 CLONE_LOGGER = LOGGER_ID
 # ----------------------------------------------------------------
 # ----------------------------------------------------------------
-OWNER_ID = int(getenv("OWNER_ID", 5536473064))
+OWNER_ID = int(getenv("OWNER_ID", 6154383311))
 # -----------------------------------------------------------------
 # -----------------------------------------------------------------
 # config.py
@@ -61,7 +61,7 @@ API_KEY = getenv("API_KEY", "30DxNexGenBots5c0310") # youtube song api key, gene
 API2_URL = getenv("API2_URL", "https://shrutibots.site")
 # ----------------------------------------------------------------
 # ----------------------------------------------------------------
-SOURCE = getenv("SOURCE", "https://github.com/TEAMPURVI/SONALI_MUSIC")
+SOURCE = getenv("SOURCE", "https://t.me/TNL_NETWORK")
 UPSTREAM_REPO = getenv(
     "UPSTREAM_REPO",
     "https://github.com/iamnobita206243/NOBITA_CLONE_MUSIX",
@@ -77,9 +77,9 @@ GIT_TOKEN = getenv(
 
 #------------------------------------------------------------------------
 # -------------------------------------------------------------------------
-SUPPORT_CHANNEL = getenv("SUPPORT_CHANNEL", "https://t.me/NOBITA_SUPP0RT")
-SUPPORT_CHAT = getenv("SUPPORT_CHAT", "https://t.me/+S0Q1-J_EQLA3YmU1")
-CHAT = getenv("CHAT", "https://t.me/+S0Q1-J_EQLA3YmU1")
+SUPPORT_CHANNEL = getenv("SUPPORT_CHANNEL", "https://t.me/TNL_NETWORK")
+SUPPORT_CHAT = getenv("SUPPORT_CHAT", "https://t.me/+adNifJvmcZZlNjA9")
+CHAT = getenv("CHAT", "https://t.me/+adNifJvmcZZlNjA9")
 # ------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------
 
