@@ -13,7 +13,7 @@ def _clean_text(text: str) -> str:
     return str(text or "").strip()
 
 
-def decorate_text(text: str, emoji_count: int = 3) -> str:
+def decorate_text(text: str, emoji_count: int = 5) -> str:
     """Apply the bot's global quote + random premium-emoji style once."""
     text = _clean_text(text)
     if not text:
