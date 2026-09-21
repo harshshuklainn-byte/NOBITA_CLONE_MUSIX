@@ -3,6 +3,7 @@ import asyncio
 import importlib
 
 from pyrogram import idle
+from pyrogram.errors import FloodWait
 from pytgcalls.exceptions import NoActiveGroupCall
 
 import config
@@ -29,7 +30,21 @@ async def init():
             BANNED_USERS.add(user_id)
     except:
         pass
-    await app.start()
+    # Telegram may temporarily rate-limit bot authorization when the same
+    # bot token is restarted/deployed repeatedly.  Do not crash the whole
+    # container in that case; wait for Telegram's exact retry interval and
+    # then authorize again.
+    while True:
+        try:
+            await app.start()
+            break
+        except FloodWait as ex:
+            wait_seconds = max(int(getattr(ex, "value", 0)), 1) + 5
+            LOGGER("Clonify").warning(
+                f"Telegram FLOOD_WAIT during bot authorization. "
+                f"Waiting {wait_seconds} seconds before retrying."
+            )
+            await asyncio.sleep(wait_seconds)
     for all_module in ALL_MODULES:
         importlib.import_module("Clonify.plugins" + all_module)
     LOGGER("Clonify.plugins").info("𝐀𝐥𝐥 𝐅𝐞𝐚𝐭𝐮𝐫𝐞𝐬 𝐋𝐨𝐚𝐝𝐞𝐝 𝐁𝐚𝐛𝐲🥳...")
