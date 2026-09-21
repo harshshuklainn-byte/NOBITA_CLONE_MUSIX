@@ -42,6 +42,14 @@ autoend = {}
 counter = {}
 
 
+def _local_file_ok(value):
+    if not isinstance(value, str) or not value:
+        return False
+    if value.startswith(("http://", "https://", "rtmp://", "rtsp://")):
+        return True
+    return os.path.isfile(value) and os.path.getsize(value) > 0
+
+
 async def _clear_(chat_id):
     db[chat_id] = []
     await remove_active_video_chat(chat_id)
@@ -229,6 +237,8 @@ class Call(PyTgCalls):
         image: Union[bool, str] = None,
     ):
         assistant = await group_assistant(self, chat_id)
+        if not _local_file_ok(link):
+            raise AssistantErr("ᴛʀᴀᴄᴋ ғɪʟᴇ ɪs ɴᴏᴛ ᴀᴠᴀɪʟᴀʙʟᴇ. ᴘʟᴇᴀsᴇ ᴛʀʏ ᴘʟᴀʏɪɴɢ ᴛʜᴇ sᴏɴɢ ᴀɢᴀɪɴ.")
         language = await get_lang(chat_id)
         _ = get_string(language)
         if video:
@@ -425,6 +435,27 @@ class Call(PyTgCalls):
                 db[chat_id][0]["mystic"] = run
                 db[chat_id][0]["markup"] = "tg"
             else:
+                # A queued local file can disappear after cleanup/restart.
+                # Re-materialize YouTube tracks instead of passing a dead path
+                # to PyTgCalls (the old code surfaced FileNotFoundError).
+                if not _local_file_ok(queued) and str(videoid) not in ("telegram", "soundcloud"):
+                    try:
+                        refreshed, direct = await YouTube.download(
+                            videoid,
+                            None,
+                            video=video,
+                            videoid=True,
+                        )
+                    except Exception:
+                        refreshed, direct = None, False
+                    if direct and _local_file_ok(refreshed):
+                        queued = refreshed
+                        db[chat_id][0]["file"] = refreshed
+                    else:
+                        return await app.send_message(
+                            original_chat_id,
+                            text=_['call_6'],
+                        )
                 if video:
                     stream = AudioVideoPiped(
                         queued,
