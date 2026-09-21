@@ -25,9 +25,9 @@ class PRO(Client):
     async def send_message(self, *args, **kwargs):
         from Clonify.utils.premium_ui import decorate_text
         if len(args) >= 2 and isinstance(args[1], str):
-            args = (args[0], decorate_text(args[1], 3), *args[2:])
+            args = (args[0], decorate_text(args[1], 5), *args[2:])
         elif isinstance(kwargs.get("text"), str):
-            kwargs["text"] = decorate_text(kwargs["text"], 3)
+            kwargs["text"] = decorate_text(kwargs["text"], 5)
         return await super().send_message(*args, **kwargs)
 
     async def edit_message_text(self, *args, **kwargs):
@@ -35,7 +35,7 @@ class PRO(Client):
         if len(args) >= 3 and isinstance(args[2], str):
             args = (args[0], args[1], decorate_text(args[2], 3), *args[3:])
         elif isinstance(kwargs.get("text"), str):
-            kwargs["text"] = decorate_text(kwargs["text"], 3)
+            kwargs["text"] = decorate_text(kwargs["text"], 5)
         return await super().edit_message_text(*args, **kwargs)
 
     async def send_photo(self, *args, **kwargs):
