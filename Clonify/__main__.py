@@ -1,4 +1,3 @@
-
 import asyncio
 import importlib
 
@@ -16,58 +15,94 @@ from config import BANNED_USERS
 from Clonify.plugins.tools.clone import restart_bots
 
 
+async def _start_with_floodwait(start_callable, label):
+    """Start a Telegram client without turning FloodWait into a restart loop."""
+    while True:
+        try:
+            return await start_callable()
+        except FloodWait as ex:
+            wait_seconds = max(int(getattr(ex, "value", 1)), 1) + 5
+            LOGGER("Clonify").warning(
+                f"{label}: Telegram FLOOD_WAIT is active. "
+                f"Waiting {wait_seconds} seconds before retrying."
+            )
+            await asyncio.sleep(wait_seconds)
+
+
 async def init():
     if not config.STRING1:
-        LOGGER(__name__).error("String Session not filled, please provide a valid session.")
-        exit()
+        LOGGER(__name__).error(
+            "String Session not filled, please provide a valid session."
+        )
+        return
+
     await sudo()
+
     try:
         users = await get_gbanned()
         for user_id in users:
             BANNED_USERS.add(user_id)
+
         users = await get_banned_users()
         for user_id in users:
             BANNED_USERS.add(user_id)
-    except:
-        pass
-    # Telegram may temporarily rate-limit bot authorization when the same
-    # bot token is restarted/deployed repeatedly.  Do not crash the whole
-    # container in that case; wait for Telegram's exact retry interval and
-    # then authorize again.
-    while True:
-        try:
-            await app.start()
-            break
-        except FloodWait as ex:
-            wait_seconds = max(int(getattr(ex, "value", 0)), 1) + 5
-            LOGGER("Clonify").warning(
-                f"Telegram FLOOD_WAIT during bot authorization. "
-                f"Waiting {wait_seconds} seconds before retrying."
-            )
-            await asyncio.sleep(wait_seconds)
-    for all_module in ALL_MODULES:
-        importlib.import_module("Clonify.plugins" + all_module)
-    LOGGER("Clonify.plugins").info("𝐀𝐥𝐥 𝐅𝐞𝐚𝐭𝐮𝐫𝐞𝐬 𝐋𝐨𝐚𝐝𝐞𝐝 𝐁𝐚𝐛𝐲🥳...")
-    await userbot.start()
-    await PRO.start()
-    try:
-        await PRO.stream_call("https://te.legra.ph/file/29f784eb49d230ab62e9e.mp4")
-    except NoActiveGroupCall:
-        LOGGER("Clonify").error(
-            "𝗣𝗹𝗭 𝗦𝗧𝗔𝗥𝗧 𝗬𝗢𝗨𝗥 𝗟𝗢𝗚 𝗚𝗥𝗢𝗨𝗣 𝗩𝗢𝗜𝗖𝗘𝗖𝗛𝗔𝗧\𝗖𝗛𝗔𝗡𝗡𝗘𝗟\n\n𝗠𝗨𝗦𝗜𝗖 𝗕𝗢𝗧 𝗦𝗧𝗢𝗣........"
+    except Exception as ex:
+        LOGGER(__name__).warning(
+            f"Ban-list preload skipped: {type(ex).__name__}"
         )
-        exit()
-    except:
-        pass
-    await PRO.decorators()
-    await restart_bots()
-    LOGGER("Clonify").info(
-        "╔═════ஜ۩۞۩ஜ════╗\n  ☠︎︎𝗠𝗔𝗗𝗘 𝗕𝗬 𝗣𝗿𝗼𝗕𝗼t𝘀☠︎︎\n╚═════ஜ۩۞۩ஜ════╝"
-    )
-    await idle()
-    await app.stop()
-    await userbot.stop()
-    LOGGER("Clonify").info("𝗦𝗧𝗢𝗣 𝗠𝗨𝗦𝗜𝗖🎻 𝗕𝗢𝗧..")
+
+    # IMPORTANT:
+    # The old code allowed auth.ImportBotAuthorization FloodWait to escape.
+    # The process supervisor then restarted the container every few seconds,
+    # causing another authorization attempt and keeping the bot offline.
+    await _start_with_floodwait(app.start, "Bot")
+
+    try:
+        for all_module in ALL_MODULES:
+            importlib.import_module("Clonify.plugins" + all_module)
+
+        LOGGER("Clonify.plugins").info(
+            "𝐀𝐥𝐥 𝐅𝐞𝐚𝐭𝐮𝐫𝐞𝐬 𝐋𝐨𝐚𝐝𝐞𝐝 𝐁𝐚𝐛𝐲🥳..."
+        )
+
+        await _start_with_floodwait(userbot.start, "Userbot")
+        await PRO.start()
+
+        try:
+            await PRO.stream_call(
+                "https://te.legra.ph/file/29f784eb49d230ab62e9e.mp4"
+            )
+        except NoActiveGroupCall:
+            LOGGER("Clonify").error(
+                "Please start your log group's voice chat/channel first."
+            )
+            return
+        except Exception:
+            pass
+
+        await PRO.decorators()
+        await restart_bots()
+
+        LOGGER("Clonify").info(
+            "╔═════ஜ۩۞۩ஜ════╗\n"
+            "  ☠︎︎𝗠𝗔𝗗𝗘 𝗕𝗬 𝗣𝗿𝗼𝗕𝗼t𝘀☠︎︎\n"
+            "╚═════ஜ۩۞۩ஜ════╝"
+        )
+
+        await idle()
+
+    finally:
+        for client, label in (
+            (app, "Bot"),
+            (userbot, "Userbot"),
+        ):
+            try:
+                if client.is_connected:
+                    await client.stop()
+            except Exception as ex:
+                LOGGER("Clonify").warning(
+                    f"{label} shutdown warning: {type(ex).__name__}"
+                )
 
 
 if __name__ == "__main__":
